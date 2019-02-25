@@ -42,8 +42,8 @@
                 <ng-container matColumnDef="Operations">
                     <th mat-header-cell *matHeaderCellDef> Edit / Delete </th>
                     <td mat-cell *matCellDef="let element" class="">
-                        <button mat-flat-button color="primary" class="" (click)="openAddUserDialog(true, element)"><mat-icon class="">edit</mat-icon></button>
-                        <button mat-flat-button color="warn" class=""><mat-icon class="" (click)="deleteUser(element.Email)">delete</mat-icon></button>
+                        <button mat-flat-button color="primary" class="margin-right-5px" (click)="openAddUserDialog(true, element)"><mat-icon class="">edit</mat-icon></button>
+                        <button mat-flat-button color="warn" class="margin-right-5px"><mat-icon class="" (click)="deleteUser(element.Email)">delete</mat-icon></button>
                     </td>
                 </ng-container>
     

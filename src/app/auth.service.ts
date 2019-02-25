@@ -34,5 +34,5 @@ export class AuthService {
 
 const ACCOUNT_DATA: AppAccount[] = [
   { Email: 'bikramsinha4u@yahoo.com', Password: '123' },
-  { Email: 'nandini@yahoo.com', Password: '123' }
+  { Email: 'nandini@arborgold.com', Password: '123' }
 ];
