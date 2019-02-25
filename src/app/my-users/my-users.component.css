@@ -1,0 +1,12 @@
+.users-table-container {
+  width: 100%;
+}
+
+.header-toolbar{
+  margin: 15px 0 0;
+}
+
+.users-table{
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,82 @@
+<div class="users-table-container">
+        <mat-toolbar class="header-toolbar" color="accent">
+            <span> Users List </span>
+            <span>
+                <button mat-raised-button (click)="openAddUserDialog(false)" color="primary" class=""><mat-icon>add </mat-icon>Add User</button>
+                <button mat-button (click)='logout()'>Logout</button>
+            </span>
+        </mat-toolbar>
+    
+        <div class="mat-elevation-z8 users-table">
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="FirstName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+                    <td mat-cell *matCellDef="let element" matTooltip="{{element.Notes}}"> {{element.FirstName}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="LastName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.LastName}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Phone">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Phone}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Email">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Address">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+                    <td mat-cell *matCellDef="let element" matTooltip="{{element.City}}"> {{element.Address}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Zip">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Zip Code </th>
+                    <td mat-cell *matCellDef="let element" matTooltip="{{element.State}}"> {{element.Zip}} </td>
+                </ng-container>
+    
+                <ng-container matColumnDef="Operations">
+                    <th mat-header-cell *matHeaderCellDef> Edit / Delete </th>
+                    <td mat-cell *matCellDef="let element" class="">
+                        <button mat-flat-button color="primary" class="" (click)="openAddUserDialog(true, element)"><mat-icon class="">edit</mat-icon></button>
+                        <button mat-flat-button color="warn" class=""><mat-icon class="" (click)="deleteUser(element.Email)">delete</mat-icon></button>
+                    </td>
+                </ng-container>
+    
+                <!-- Search Filters -->
+                <ng-container matColumnDef="user-email-filter">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-form-field class="search-field">
+                            <input placeholder="Search" #filterUserEmail matInput [(ngModel)]="emailFilterInput">
+                            <mat-icon matSuffix class="">search</mat-icon>
+                        </mat-form-field>
+                    </th>
+                </ng-container>
+    
+                <!-- Empty -->
+                <ng-container matColumnDef="empty">
+                    <th mat-header-cell *matHeaderCellDef>
+                        <mat-form-field class="">
+                            <input placeholder="Non Functional" matInput>
+                            <mat-icon matSuffix class="">search</mat-icon>
+                        </mat-form-field>
+                    </th>
+                </ng-container>
+    
+                <!-- Empty2 -->
+                <ng-container matColumnDef="empty2">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                </ng-container>
+    
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-header-row *matHeaderRowDef="['empty', 'empty', 'empty', 'user-email-filter', 'empty2', 'empty2', 'empty2']" class="filter-row"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+    
+            <mat-paginator class="users-table-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>

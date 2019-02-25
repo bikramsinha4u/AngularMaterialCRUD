@@ -1,0 +1,44 @@
+<div class="example-container">
+    <h1 mat-dialog-title>{{data.label}}</h1>
+    <form mat-dialog-content [formGroup]="userForm">
+        <mat-form-field>
+            <input matInput placeholder="FirstName" formControlName="FirstName" [ngModel]="data.user.FirstName">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="LastName" formControlName="LastName" [ngModel]="data.user.LastName">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Phone" formControlName="Phone" [ngModel]="data.user.Phone">
+        </mat-form-field>
+
+        <mat-form-field class="">
+            <input matInput placeholder="Email" formControlName="Email" [ngModel]="data.user.Email" name="email" required [readonly]="data.label != 'Add User'">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Address" formControlName="Address" [ngModel]="data.user.Address">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="City" formControlName="City" [ngModel]="data.user.City">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="State" formControlName="State" [ngModel]="data.user.State">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Zip" formControlName="Zip" [ngModel]="data.user.Zip">
+        </mat-form-field>
+
+        <mat-form-field>
+            <textarea matInput placeholder="Notes" formControlName="Notes" [ngModel]="data.user.Notes"></textarea>
+        </mat-form-field>
+    </form>
+    <div mat-dialog-actions class="direction-rtl">
+        <button mat-flat-button color="primary" type="submit" (click)="addUpdateUser()" [disabled]="!userForm.valid" cdkFocusInitial>{{data.label != 'Add User'? 'Save': 'Add'}}</button>
+        <button mat-button (click)="cancelUserDialog()">Cancel</button>
+    </div>
+</div>
