@@ -1,3 +1,31 @@
+# Steps to run the app:
+
+1. Install node.js <br />
+https://nodejs.org/en/ <br />
+
+2. Install Angular CLI <br />
+npm install -g @angular/cli <br />
+
+3. Download the project from git repo. <br />
+
+4. Go to your project code directory <br />
+cd [directory path] <br />
+example: cd C:\my-app\anguarApp\angularApp_api_bootstrap <br />
+
+5. Execute <br />
+npm install <br />
+
+6. Execute <br />
+ng build <br />
+
+7. Execute <br />
+ng serve --open <br />
+
+8. Wait for the browser to open or go to the url <br />
+http://localhost:4200/
+
+9. Viola!
+
 # MyApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
