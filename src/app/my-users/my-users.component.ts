@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import 'rxjs';
 import { Observable, fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
-import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar, MatDialog } from '@angular/material';
-import { MyApiService } from '../my-api.service';
+import { MatPaginator, MatTableDataSource, MatSort, MatDialog } from '@angular/material';
+import { apiService } from '../api.service';
 import { Users } from '../models/users';
 import { AddUserModalComponent } from '../add-user-modal/add-user-modal.component';
-import { Confirmation } from '../confirmation-dialog/confirmation-dialog.component';
 import { CommonService } from '../common.service';
-import { Router } from '../../../node_modules/@angular/router';
+import { Router } from '@angular/router';
+import { Confirmation } from '../custom-classes/confirmation';
 
 @Component({
   selector: 'app-my-users',
@@ -26,7 +26,7 @@ export class MyUsersComponent implements OnInit, AfterViewInit {
   keyUpEvents: any;
   allUsersData: Users[];
 
-  constructor(private router: Router, private snackBar: MatSnackBar, private myApiService: MyApiService, public dialog: MatDialog, private commonService: CommonService) { }
+  constructor(private router: Router, private myApiService: apiService, public dialog: MatDialog, private commonService: CommonService) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -39,7 +39,7 @@ export class MyUsersComponent implements OnInit, AfterViewInit {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    this.commonService.showSnackBarMessage("Logout Successful");
     this.router.navigate(['login']);
   }
 
@@ -49,7 +49,8 @@ export class MyUsersComponent implements OnInit, AfterViewInit {
   }
 
   openAddUserDialog(isEdit: boolean, user: Users): void {
-    var newUser: Users = { FirstName: '', LastName: '', Phone: '', Email: '', Address: '', City: '', State: '', Zip: '', Notes: '' }
+    let newUser: Users = { FirstName: '', LastName: '', Phone: '', Email: '', Address: '', City: '', State: '', Zip: '', Notes: '' }
+    
     const dialogRef = this.dialog.open(AddUserModalComponent, {
       width: '25%',
       data: { label: isEdit ? 'Edit User' : 'Add User', user: isEdit ? user : newUser }
@@ -63,14 +64,14 @@ export class MyUsersComponent implements OnInit, AfterViewInit {
 
   addUpdateUser(userData: Users) {
     this.myApiService.addUpdateUser(userData);
-    this.snackBar.open('Saved Succesfully', undefined, { duration: 3000, horizontalPosition: "right", verticalPosition: "top" });
+    this.commonService.showSnackBarMessage('Saved Succesfully');
     this.getUsers();
   }
 
-  confirmDeleteUser(userEmail: string): Observable<boolean> {
+  confirmDeleteUser(email: string): Observable<boolean> {
     let confirmation: Confirmation = {
       title: "Delete User",
-      message: "Are you sure you want to delete the user associated with email account: " + userEmail + " ?",
+      message: "Are you sure you want to delete the user associated with email account: " + email + " ?",
       button: {
         ok: "Confirm", cancel: "Cancel"
       }
@@ -82,7 +83,7 @@ export class MyUsersComponent implements OnInit, AfterViewInit {
     this.confirmDeleteUser(userEmail).subscribe((isConfirmed) => {
       if (isConfirmed) {
         this.myApiService.removeUser(userEmail);
-        this.snackBar.open('Deleted Succesfully', undefined, { duration: 3000, horizontalPosition: "right", verticalPosition: "top" });
+        this.commonService.showSnackBarMessage('Deleted Succesfully');
         this.getUsers();
       }
     });

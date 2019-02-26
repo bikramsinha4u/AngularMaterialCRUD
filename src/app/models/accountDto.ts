@@ -1,4 +1,4 @@
-export class AppAccount {
+export class AccountDTO {
     Email: string;
     Password: string;
 }

@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '@angular/material/core';
+import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { MatSnackBar } from '../../../node_modules/@angular/material';
-import { Router } from '../../../node_modules/@angular/router';
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-  }
-}
+import { Router } from '@angular/router';
+import { MyErrorStateMatcher } from '../custom-classes/error-state-matcher';
+import { CommonService } from '../common.service';
+import { AccountDTO } from '../models/accountDto';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +12,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  hide = true;
+  hidePassword = true;
 
   emailFormControl = new FormControl('', [
     Validators.required,
@@ -28,23 +22,22 @@ export class RegisterComponent implements OnInit {
     Validators.required,
   ]);
   matcher = new MyErrorStateMatcher();
-  registerData = { email: null, pwd: null };
+  registerData: AccountDTO = { Email: null, Password: null };
 
-
-  constructor(private snackBar: MatSnackBar, private authService: AuthService, private router: Router) { }
+  constructor(private commonService: CommonService, private authService: AuthService, private router: Router) { }
 
   ngOnInit() { }
-  
-  registerUser() {
+
+  registerUser(): void {
     if (!this.emailFormControl.valid || !this.pwdFormControl.valid)
       return;
 
     let result = this.authService.registerUser(this.registerData);
     if (result) {
-      this.snackBar.open('Registered Successfully', undefined, { duration: 3000, horizontalPosition: "right", verticalPosition: "top" });
+      this.commonService.showSnackBarMessage('Registered Successfully');
       this.router.navigate(['users']);
     }
     else
-      this.snackBar.open('Email already exists', undefined, { duration: 3000, horizontalPosition: "right", verticalPosition: "top" });
+      this.commonService.showSnackBarMessage('Email already exists');
   }
 }

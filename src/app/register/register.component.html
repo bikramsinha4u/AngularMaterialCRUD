@@ -1,31 +1,30 @@
-<div class="">
-  <form class="register-container">
-    <mat-toolbar class="header-toolbar" color="accent">
-      <span> Register </span>
-      <button mat-button routerLink="/login">or Login</button>
-    </mat-toolbar>
+<form class="account-container">
+  <mat-toolbar class="header-toolbar" color="accent">
+    <span> Register </span>
+    <button mat-button routerLink="/login">or Login</button>
+  </mat-toolbar>
 
-    <mat-form-field class="">
-      <input matInput placeholder="Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher" [(ngModel)]="registerData.email"
-        name="email" required>
-      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-        Please enter a valid email address
-      </mat-error>
-      <mat-error *ngIf="emailFormControl.hasError('required')">
-        Email is
-        <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+  <mat-form-field class="">
+    <input matInput placeholder="Email" [formControl]="emailFormControl" [errorStateMatcher]="matcher" [(ngModel)]="registerData.Email"
+      name="email" required>
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is
+      <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="Password" [formControl]="pwdFormControl" [errorStateMatcher]="matcher" [type]="hide ? 'password' : 'text'"
-        [(ngModel)]="registerData.pwd" name="pwd" required>
-      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      <mat-error *ngIf="pwdFormControl.hasError('required')">
-        Password is
-        <strong>required</strong>
-      </mat-error>
-    </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Password" [formControl]="pwdFormControl" [errorStateMatcher]="matcher" [type]="hidePassword ? 'password' : 'text'"
+      [(ngModel)]="registerData.Password" name="pwd" required>
+    <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+    <mat-error *ngIf="pwdFormControl.hasError('required')">
+      Password is
+      <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
 
-    <button mat-button mat-raised-button color="primary" (click)="registerUser()">Register</button>
-  </form>
+  <button mat-button mat-raised-button color="primary" (click)="registerUser()">Register</button>
+</form>

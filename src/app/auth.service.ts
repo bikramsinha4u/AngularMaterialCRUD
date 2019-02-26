@@ -1,38 +1,42 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { AppAccount } from './models/app-account';
+import { AccountData } from './models/account-data';
+import { AccountDTO } from './models/accountDto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
 
-  registerUser(registerData: any): boolean {
-    let index = ACCOUNT_DATA.findIndex(x => x.Email == registerData.email);
-    if (index != -1) {
-      return false;
-    }
-    ACCOUNT_DATA.push({ Email: registerData.email, Password: registerData.pwd });
-    localStorage.setItem('token', registerData.email);
+  constructor() { }
+
+  registerUser(registerData: AccountDTO): boolean {
+    let index = ACCOUNT_DATA.findIndex(x => x.Email == registerData.Email);
+    
+    if (index != -1) 
+      return false;    
+        
+    this.addAccount(registerData);
     return true;
   }
 
-  loginUser(loginData: any): boolean {
-    let index = ACCOUNT_DATA.findIndex(x => (x.Email == loginData.email && x.Password == loginData.pwd));
-    if (index != -1) {
-      localStorage.setItem('token', loginData.email);
+  loginUser(loginData: AccountDTO): boolean {    
+    if (this.isAccountExist(loginData))
       return true;
-    }
+    
     return false;
   }
 
-  ifTokenFound(): boolean {
-    return localStorage.getItem('token') != null ? true : false;
+  isAccountExist(accountDTO: AccountDTO): boolean{
+    let index = ACCOUNT_DATA.findIndex(x => (x.Email == accountDTO.Email && x.Password == accountDTO.Password));
+    return index != -1;
+  }
+
+  addAccount(accountDTO: AccountDTO): void{
+    ACCOUNT_DATA.push({ Email: accountDTO.Email, Password: accountDTO.Password });
   }
 }
 
-const ACCOUNT_DATA: AppAccount[] = [
+const ACCOUNT_DATA: AccountData[] = [
   { Email: 'bikramsinha4u@yahoo.com', Password: '123' },
   { Email: 'nandini@arborgold.com', Password: '123' }
 ];
