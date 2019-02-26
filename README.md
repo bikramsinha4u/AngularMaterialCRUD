@@ -26,6 +26,8 @@ http://localhost:4200/
 
 9. Viola!
 
+P.S - This project will be converted to full 'MEAN Stack' application soon. Keep Watching!
+
 # MyApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
